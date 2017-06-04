@@ -83,9 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         redButton.setOnClickListener(this);
         greenButton.setOnClickListener(this);
         blueButton.setOnClickListener(this);
-//        writeToDB();
-//        readDB();
-//        listenForChanges();
+
 
     }
 
@@ -151,6 +149,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.blue_button:
                 System.out.println("Blue button clicked");
                 mDatabase.child(getRandomNumber()).setValue(createBluePost());
+                cv.setVisibility(View.VISIBLE);
+                send_buttn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cv.setVisibility(View.GONE);
+                    }
+                });
                 break;
             case R.id.red_button:
                 System.out.println("Red button clicked");
@@ -167,6 +172,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.green_button:
                 System.out.println("Green button clicked");
                 mDatabase.child(getRandomNumber()).setValue(createGreenPost());
+                cv.setVisibility(View.VISIBLE);
+                send_buttn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cv.setVisibility(View.GONE);
+                    }
+                });
                 break;
         }
     }
