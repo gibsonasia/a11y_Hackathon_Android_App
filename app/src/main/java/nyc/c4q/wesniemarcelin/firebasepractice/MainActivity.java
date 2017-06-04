@@ -3,10 +3,12 @@ package nyc.c4q.wesniemarcelin.firebasepractice;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button redButton;
     Button greenButton;
     Button blueButton;
+    CardView cv;
+    Button send_buttn;
+    EditText editText;
 
 
 
@@ -49,6 +54,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        cv = (CardView) findViewById(R.id.cv_text);
+        send_buttn = (Button) findViewById(R.id.send_bttn);
+        editText = (EditText) findViewById(R.id.ed_txt);
+
+
         redButton = (Button) findViewById(R.id.red_button);
         greenButton = (Button) findViewById(R.id.green_button);
         blueButton = (Button) findViewById(R.id.blue_button);
@@ -143,8 +154,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.red_button:
                 System.out.println("Red button clicked");
-                mDatabase.child(getRandomNumber()).setValue(createRedPost());
-                break;
+                mDatabase.child("colors").child(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)).setValue(createRedPost().toString());
+                cv.setVisibility(View.VISIBLE);
+                send_buttn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cv.setVisibility(View.GONE);
+                    }
+                });
+
+                mDatabase.child(getRandomNumber()).setValue(createRedPost());break;
             case R.id.green_button:
                 System.out.println("Green button clicked");
                 mDatabase.child(getRandomNumber()).setValue(createGreenPost());
@@ -201,10 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return red;
     }
     private static String getCurrentUTCTime() {
-//        DateFormat df = DateFormat.getTimeInstance();
-//        df.setTimeZone(TimeZone.getTimeZone("gmt"));
-//        String gmtTime = df.format(new Date());
-//        Log.d("UTC Time", gmtTime);
+
         Calendar c = Calendar.getInstance();
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -213,25 +229,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return  formattedDate;
     }
 
-
-//    private static String getEndTime() {
-//        String current = getCurrentUTCTime();
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//
-//        long retryDate = System.currentTimeMillis();
-//
-//        int sec = 600;
-//
-//        Timestamp original = new Timestamp(retryDate);
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTimeInMillis(original.getTime());
-//        cal.add(Calendar.SECOND, sec);
-//        Timestamp later = new Timestamp(cal.getTime().getTime());
-//
-//        System.out.println(original);
-//        System.out.println(later);
-
-//    }
 
     public static String getRandomNumber(){
         Integer  number = rand.nextInt(Integer.MAX_VALUE) + 1;
