@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "818003041809",
+    "firebase_url": "https://fir-practice-9fdde.firebaseio.com",
+    "project_id": "fir-practice-9fdde",
+    "storage_bucket": "fir-practice-9fdde.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818003041809:android:cf4489f0209db41f",
+        "android_client_info": {
+          "package_name": "nyc.c4q.wesniemarcelin.firebasepractice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818003041809-c21o4lfrfq5kn1p3nnhp01724giu4kjj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChXDidgoKJ7C0eS1maFYXylKzCHOPEIIA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
