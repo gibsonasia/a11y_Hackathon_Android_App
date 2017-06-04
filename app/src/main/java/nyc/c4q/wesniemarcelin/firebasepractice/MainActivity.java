@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try{
             red.put("timestamp_start",getCurrentUTCTime());
             red.put("timestamp_end", "2017-06-03 02:00:00");
-            red.put("action_text", "RED");
+            red.put("action_text", "STOP");
             red.put("action_type", "abc");
 
         } catch (Exception e) {
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try{
             red.put("timestamp_start",getCurrentUTCTime());
             red.put("timestamp_end", "2017-06-03 02:00:00");
-            red.put("action_text", "GREEN");
+            red.put("action_text", "GOOD");
             red.put("action_type", "abc");
 
         } catch (Exception e) {
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try{
             red.put("timestamp_start",getCurrentUTCTime());
             red.put("timestamp_end", "2017-06-03 02:00:00");
-            red.put("action_text", "BLUE");
+            red.put("action_text", "COOL");
             red.put("action_type", "abc");
 
         } catch (Exception e) {
