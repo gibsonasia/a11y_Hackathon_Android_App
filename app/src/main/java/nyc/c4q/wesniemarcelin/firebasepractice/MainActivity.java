@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         System.out.println(isGooglePlayServicesAvailable());
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference("posts");
-        mDatabase.setValue("Hello, World 22!");
+//        mDatabase.setValue("Hello, World 22!");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -149,36 +149,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.blue_button:
                 System.out.println("Blue button clicked");
                 mDatabase.child(getRandomNumber()).setValue(createBluePost());
-                cv.setVisibility(View.VISIBLE);
-                send_buttn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        cv.setVisibility(View.GONE);
-                    }
-                });
                 break;
             case R.id.red_button:
                 System.out.println("Red button clicked");
-                mDatabase.child("colors").child(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)).setValue(createRedPost().toString());
-                cv.setVisibility(View.VISIBLE);
-                send_buttn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        cv.setVisibility(View.GONE);
-                    }
-                });
-
-                mDatabase.child(getRandomNumber()).setValue(createRedPost());break;
+                mDatabase.child(getRandomNumber()).setValue(createRedPost());
+                break;
             case R.id.green_button:
                 System.out.println("Green button clicked");
                 mDatabase.child(getRandomNumber()).setValue(createGreenPost());
-                cv.setVisibility(View.VISIBLE);
-                send_buttn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        cv.setVisibility(View.GONE);
-                    }
-                });
                 break;
         }
     }
