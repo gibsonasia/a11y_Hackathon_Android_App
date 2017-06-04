@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.red_button:
                 System.out.println("Red button clicked");
-                mDatabase.child("colors").child(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)).setValue(createRedJson());
+                mDatabase.child("colors").child(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)).setValue(createRedJson().toString());
                 break;
             case R.id.green_button:
                 System.out.println("Green button clicked");
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public static JSONObject createRedJson(){
+    public static String createRedJson(){
         JSONObject red = new JSONObject();
         try{
             red.put("timestamp_start","2017-06-03 01:00:00");
@@ -149,8 +150,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         } catch (JSONException e) {
             e.printStackTrace();
+            FirebaseCrash.report(new Exception("App Name : My first Android non-fatal error"));
         }
-        return red;
+        System.out.println(red.toString());
+        return red.toString();
     }
 }
 
