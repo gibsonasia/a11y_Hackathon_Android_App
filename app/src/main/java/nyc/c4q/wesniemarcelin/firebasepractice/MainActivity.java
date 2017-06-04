@@ -3,6 +3,7 @@ package nyc.c4q.wesniemarcelin.firebasepractice;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,8 +17,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.security.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Map;
+import java.util.Random;
+import java.util.TimeZone;
 
 import nyc.c4q.wesniemarcelin.firebasepractice.model.UserMessage;
 
@@ -26,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "YOOOO";
     private DatabaseReference mDatabase;
     private FirebaseDatabase database;
+    private static Random rand = new Random();
 
     Button redButton;
     Button greenButton;
@@ -42,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         blueButton = (Button) findViewById(R.id.blue_button);
         System.out.println(isGooglePlayServicesAvailable());
         database = FirebaseDatabase.getInstance();
-        mDatabase = database.getReference("message");
+        mDatabase = database.getReference("posts");
         mDatabase.setValue("Hello, World 22!");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -127,33 +139,104 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (i) {
             case R.id.blue_button:
                 System.out.println("Blue button clicked");
-                mDatabase.child("colors").child(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)).setValue("BLUE");
+                mDatabase.child(getRandomNumber()).setValue(createBluePost());
                 break;
             case R.id.red_button:
                 System.out.println("Red button clicked");
-                mDatabase.child("colors").child(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)).setValue(createRedJson().toString());
+                mDatabase.child(getRandomNumber()).setValue(createRedPost());
                 break;
             case R.id.green_button:
                 System.out.println("Green button clicked");
-                mDatabase.child("colors").child(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)).setValue("GREEN");
+                mDatabase.child(getRandomNumber()).setValue(createGreenPost());
                 break;
         }
     }
 
-    public static String createRedJson(){
-        JSONObject red = new JSONObject();
+    public static Map<String, String> createRedPost(){
+        Map<String, String> red = new ArrayMap<>();
+
         try{
-            red.put("timestamp_start","2017-06-03 01:00:00");
+            red.put("timestamp_start",getCurrentUTCTime());
             red.put("timestamp_end", "2017-06-03 02:00:00");
             red.put("action_text", "RED");
             red.put("action_type", "abc");
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            FirebaseCrash.report(new Exception("App Name : My first Android non-fatal error"));
         }
         System.out.println(red.toString());
-        return red.toString();
+        return red;
+    }
+
+    public static Map<String, String> createGreenPost(){
+        Map<String, String> red = new ArrayMap<>();
+
+        try{
+            red.put("timestamp_start",getCurrentUTCTime());
+            red.put("timestamp_end", "2017-06-03 02:00:00");
+            red.put("action_text", "GREEN");
+            red.put("action_type", "abc");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(red.toString());
+        return red;
+    }
+
+    public static Map<String, String> createBluePost(){
+        Map<String, String> red = new ArrayMap<>();
+        String time = String.valueOf(System.currentTimeMillis());
+
+        try{
+            red.put("timestamp_start",getCurrentUTCTime());
+            red.put("timestamp_end", "2017-06-03 02:00:00");
+            red.put("action_text", "BLUE");
+            red.put("action_type", "abc");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(red.toString());
+        return red;
+    }
+    private static String getCurrentUTCTime() {
+//        DateFormat df = DateFormat.getTimeInstance();
+//        df.setTimeZone(TimeZone.getTimeZone("gmt"));
+//        String gmtTime = df.format(new Date());
+//        Log.d("UTC Time", gmtTime);
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        df.setTimeZone(TimeZone.getTimeZone("utc"));
+        String formattedDate = df.format(c.getTime());
+        return  formattedDate;
+    }
+
+
+//    private static String getEndTime() {
+//        String current = getCurrentUTCTime();
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//
+//        long retryDate = System.currentTimeMillis();
+//
+//        int sec = 600;
+//
+//        Timestamp original = new Timestamp(retryDate);
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTimeInMillis(original.getTime());
+//        cal.add(Calendar.SECOND, sec);
+//        Timestamp later = new Timestamp(cal.getTime().getTime());
+//
+//        System.out.println(original);
+//        System.out.println(later);
+
+//    }
+
+    public static String getRandomNumber(){
+        Integer  number = rand.nextInt(Integer.MAX_VALUE) + 1;
+        String numToString =number.toString();
+        return numToString;
     }
 }
 
