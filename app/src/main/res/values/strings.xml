@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FirebasePractice</string>
+    <string name="cv_title">Add additional notes </string>
 </resources>

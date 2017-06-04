@@ -3,9 +3,11 @@ package nyc.c4q.wesniemarcelin.firebasepractice;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button redButton;
     Button greenButton;
     Button blueButton;
+    CardView cv;
+    Button send_buttn;
+    EditText editText;
 
 
 
@@ -37,6 +42,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        cv = (CardView) findViewById(R.id.cv_text);
+        send_buttn = (Button) findViewById(R.id.send_bttn);
+        editText = (EditText) findViewById(R.id.ed_txt);
+
+
         redButton = (Button) findViewById(R.id.red_button);
         greenButton = (Button) findViewById(R.id.green_button);
         blueButton = (Button) findViewById(R.id.blue_button);
@@ -132,6 +143,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.red_button:
                 System.out.println("Red button clicked");
                 mDatabase.child("colors").child(Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID)).setValue(createRedJson().toString());
+                cv.setVisibility(View.VISIBLE);
+                send_buttn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cv.setVisibility(View.GONE);
+                    }
+                });
+
                 break;
             case R.id.green_button:
                 System.out.println("Green button clicked");
